@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro Inicial | EMS Control</title>
+
+  <link rel="stylesheet" href="datos.css" />
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>CSS Control</h2>
+        <p>Control de Servicio Social</p>
+      </div>
+
+      <ul class="menu">
+        <li class="active">📌 Registro Inicial</li>
+        <li>📊 Dashboard</li>
+        <li>🕒 Registro de Horas</li>
+        <li>⚙️ Configuración</li>
+      </ul>
+
+      <div class="user-box">
+        <span class="circle">RG</span>
+        <div>
+          <h4>Nuevo usuario</h4>
+          <p>Servicio Social</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="content">
+
+      <!-- HEADER -->
+      <header class="top-header">
+        <h1>Registro Inicial</h1>
+        <p>Crea tu cuenta y completa tus datos para acceder al sistema</p>
+      </header>
+
+      <!-- FORMULARIO -->
+      <form id="datosForm" class="card-form">
+
+        <!-- ===============================
+             CUENTA DE USUARIO
+        =============================== -->
+        <h2> Cuenta de usuario</h2>
+
+        <div class="grid">
+
+          <div class="input-group">
+            <label>Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="ejemplo@email.com"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Mínimo 6 caracteres"
+              minlength="6"
+              required
+            />
+          </div>
+
+        </div>
+
+        <!-- ===============================
+             DATOS PERSONALES
+        =============================== -->
+        <h2> Datos personales</h2>
+
+        <div class="grid">
+
+          <div class="input-group">
+            <label>Nombre completo</label>
+            <input type="text" id="nombre" required />
+          </div>
+
+          <div class="input-group">
+            <label>Matrícula</label>
+            <input type="text" id="matricula" required />
+          </div>
+
+          <div class="input-group">
+            <label>Carrera / Programa académico</label>
+            <input type="text" id="carrera" required />
+          </div>
+
+          <div class="input-group">
+            <label>Teléfono de contacto</label>
+            <input type="tel" id="telefono" required />
+          </div>
+
+        </div>
+
+        <!-- ===============================
+             SERVICIO SOCIAL
+        =============================== -->
+        <h2> Datos del servicio social</h2>
+
+        <div class="input-group">
+          <label>Nombre de la institución o asociación</label>
+          <input type="text" id="institucion" required />
+        </div>
+
+        <!-- ===============================
+             ADMINISTRATIVOS
+        =============================== -->
+        <h2> Datos administrativos</h2>
+
+        <div class="grid">
+
+          <div class="input-group">
+            <label>Fecha de inicio</label>
+            <input type="date" id="inicio" required />
+          </div>
+
+          <div class="input-group">
+            <label>Fecha estimada de término</label>
+            <input type="date" id="termino" required />
+          </div>
+
+          <div class="input-group">
+            <label>Total de horas requeridas</label>
+            <input type="number" id="horas" min="1" required />
+          </div>
+
+        </div>
+
+        <!-- BOTÓN -->
+        <button type="submit" class="btn">
+          Crear cuenta y continuar →
+        </button>
+
+        <p class="extra">
+          ¿Ya tienes cuenta?
+          <a href="login.html">Inicia sesión</a>
+        </p>
+
+      </form>
+
+    </main>
+
+  </div>
+
+  <script src="datos.js"></script>
+</body>
+</html>

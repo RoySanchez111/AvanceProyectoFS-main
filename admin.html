@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | CSS Control</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>CSS Admin Control</h2>
+        <p>Control de Servicio Social</p>
+      </div>
+
+      <ul class="menu">
+        <li class="active">📊 Dashboard</li>
+        <li>✅ Validaciones</li>
+        <li>👥 Alumnos</li>
+        <li>⚙️ Configuración</li>
+      </ul>
+
+      <div class="user-box">
+        <span class="circle">LG</span>
+        <div>
+          <h4>Liam Gallagher</h4>
+          <p>System Administrator</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="top-header">
+        <h1>Dashboard de Administración</h1>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card dark">
+          <div class="card-header">
+            <span>Alumnos Activos</span>
+            <span class="badge green">normal</span>
+          </div>
+          <h2>1,250</h2>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-header">
+            <span>Solicitudes Pendientes</span>
+            <span class="badge yellow">revisión</span>
+          </div>
+          <h2>45</h2>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-header">
+            <span>Horas Validadas (Mes)</span>
+            <span class="badge green">aprobado</span>
+          </div>
+          <h2>3,800 hrs</h2>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-header">
+            <span>Tasa de Finalización</span>
+            <span class="badge green">optimal</span>
+          </div>
+          <h2>72%</h2>
+        </div>
+      </section>
+
+      <div class="main-grid">
+        <section class="card-white table-container">
+          <h3>Validaciones Pendientes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Estudiante</th>
+                <th>Fecha</th>
+                <th>Horas</th>
+                <th>Evidencia</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="validationsTable">
+              </tbody>
+          </table>
+        </section>
+
+        <div class="charts-column">
+          <div class="card-white chart-box">
+            <h3>Horas Validadas por Semana</h3>
+            <div class="canvas-container">
+              <canvas id="doughnutChart"></canvas>
+            </div>
+          </div>
+          <div class="card-white chart-box">
+            <h3>Estado de Solicitudes</h3>
+            <div class="canvas-container">
+              <canvas id="lineChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | EMS Control</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>CSS Control</h2>
+        <p>Control de Servicio Social</p>
+      </div>
+      <ul class="menu">
+        <li class="active">📊 Dashboard</li>
+        <li>🕒 Registro de Horas</li>
+        <li>⚙️ Configuración</li>
+      </ul>
+      <div class="user-box">
+        <span class="circle" id="userInitials">--</span>
+        <div>
+          <h4 id="userNameNav">Cargando...</h4>
+          <p>Servicio Social</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="top-header">
+        <div class="header-info">
+          <h1>Hola, <span id="welcomeName">Usuario</span>! 👋</h1>
+          <p>¿Qué quieres revisar hoy?</p>
+        </div>
+        <div class="status-badge">
+          <span class="dot"></span> Monitoreo en tiempo real activo
+        </div>
+      </header>
+
+      <section class="card-section log-hours">
+        <div class="card-white">
+            <h3>Registrar horas del día</h3>
+            <div class="log-grid">
+                <div class="input-group">
+                    <label>Fecha</label>
+                    <input type="date" id="dateInput">
+                </div>
+                <div class="input-group">
+                    <label>Horas realizadas</label>
+                    <input type="number" id="hoursInput" placeholder="Ej: 4">
+                </div>
+                <button class="btn-primary" id="saveDailyHours">Añadir Horas</button>
+            </div>
+        </div>
+      </section>
+
+      <section class="projection-bar card-white">
+        <div class="proj-input">
+          <label>Horas planeadas por semana:</label>
+          <div class="input-inline">
+            <input type="number" id="weeklyPlan" value="20">
+            <button class="btn-primary">Calcular Proyección</button>
+          </div>
+        </div>
+        <div class="proj-stats">
+          <div class="stat-item">
+            <p>Semanas restantes:</p>
+            <strong>12.0 semanas</strong>
+          </div>
+          <div class="stat-item">
+            <p>Días estimados:</p>
+            <strong>60 días</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card dark">
+          <div class="card-head">
+            <p>Acumuladas</p>
+            <span class="badge gray">Meta: 480h</span>
+          </div>
+          <h2>240 hrs</h2>
+          <p class="subtext">Horas totales</p>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-head">
+            <p>Pendientes</p>
+            <span class="badge yellow">Revisión</span>
+          </div>
+          <h2>20 hrs</h2>
+          <p class="subtext">En espera de aprobación</p>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-head">
+            <p>Validadas</p>
+            <span class="badge green">Aprobado</span>
+          </div>
+          <h2>220 hrs</h2>
+          <p class="subtext">Horas oficiales</p>
+        </div>
+        <div class="stat-card dark">
+          <div class="card-head">
+            <p>Días Restantes</p>
+            <span class="badge red">Urgente</span>
+          </div>
+          <h2>45</h2>
+          <p class="subtext">Días estimados</p>
+        </div>
+      </section>
+
+      <section class="charts-grid">
+        <div class="chart-container card-white">
+          <h3>Progreso Total (%)</h3>
+          <canvas id="progressChart"></canvas>
+        </div>
+        <div class="chart-container card-white">
+          <h3>Historial Semanal</h3>
+          <canvas id="historyChart"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

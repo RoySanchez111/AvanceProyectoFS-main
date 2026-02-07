@@ -1,0 +1,337 @@
+/* --- Variables de Color y Fuentes --- */
+:root {
+    --primary-dark: #1a2e23;   /* Color oscuro de la barra lateral y tarjetas */
+    --primary-light: #2d5a43;  /* Color más claro para estados hover */
+    --accent-green: #10b981;   /* Verde brillante para acentos y botones */
+    --bg-main: #f3f4f6;        /* Fondo gris claro principal */
+    --text-dark: #1f2937;      /* Texto oscuro principal */
+    --text-light: #9ca3af;     /* Texto gris claro secundario */
+    --white: #ffffff;          /* Blanco */
+    --badge-normal: #a7f3d0;   /* Color badge normal */
+    --badge-revision: #fcd34d; /* Color badge revisión */
+    --badge-valid: #10b981;    /* Color badge validado */
+    --badge-deadline: #ef4444; /* Color badge urgente */
+    --font-family: 'Inter', sans-serif;
+}
+
+/* --- Reset y Estilos Globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+.sidebar {
+    width: 280px;
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--white);
+}
+
+.logo-text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.logo-text p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-links li.active {
+    background-color: var(--accent-green);
+    color: var(--white);
+}
+
+.nav-links li:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links .icon {
+    margin-right: 0.75rem;
+    font-family: 'Material Icons Round'; /* Opcional: para iconos reales */
+    font-size: 1.2rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.user-info .user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.user-info .user-role {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- Contenido Principal (Main Content) --- */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.main-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.welcome-text {
+    color: var(--text-light);
+    margin-top: 0.25rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    background-color: #d1fae5;
+    color: var(--accent-green);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-green);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+/* --- Sección del Predictor --- */
+.predictor-section {
+    margin-bottom: 2rem;
+}
+
+.predictor-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.input-group input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    width: 120px;
+}
+
+.btn-primary {
+    background-color: var(--accent-green);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #059669;
+}
+
+.projection-results {
+    display: flex;
+    gap: 2rem;
+    margin-left: auto; /* Empuja los resultados a la derecha */
+}
+
+.res-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.res-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.res-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+/* --- Cuadrícula de Métricas --- */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.badge-normal { background-color: var(--badge-normal); }
+.badge-revision { background-color: var(--badge-revision); }
+.badge-valid { background-color: var(--badge-valid); }
+.badge-deadline { background-color: var(--badge-deadline); color: var(--white); }
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* --- Sección de Gráficos --- */
+.charts-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chart-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 250px; /* Altura fija para los gráficos */
+    width: 100%;
+}
