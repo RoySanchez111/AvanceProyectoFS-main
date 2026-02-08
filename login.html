@@ -12,7 +12,7 @@
 
   <div class="login-container">
 
-    <!-- LEFT SIDE (Brand Panel) -->
+    <!-- LEFT SIDE -->
     <div class="login-left">
       <div class="brand">
         <h1>CSS Control</h1>
@@ -27,9 +27,12 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE (Form Panel) -->
+    <!-- RIGHT SIDE -->
     <div class="login-right">
-      <form class="login-box">
+
+      <!-- 🔥 ID CORRECTO -->
+      <form id="loginForm" class="login-box">
+
         <h2>Iniciar Sesión</h2>
         <p>Ingresa tus datos para continuar</p>
 
@@ -43,19 +46,21 @@
           <input type="password" id="password" placeholder="********" required />
         </div>
 
+        <!-- BOTÓN LOGIN -->
         <button type="submit" class="btn-login">
           Entrar
         </button>
 
-        <p class="extra">
-          ¿No tienes cuenta? <a href="datos.html">Regístrate</a>
-        </p>
+        <!-- BOTÓN REGISTRAR (NO submit) -->
+        <button type="button" id="btnRegistrar" class="btn-register">
+          Registrarse
+        </button>
+
       </form>
     </div>
 
   </div>
 
   <script src="login.js"></script>
-
 </body>
 </html>

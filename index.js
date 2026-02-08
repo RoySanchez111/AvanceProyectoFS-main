@@ -5,7 +5,7 @@ const db = require("./db");
 
 const app = express();
 const PORT = 3000;
-const SECRET = "CLAVE_SECRETA";
+const SECRET = "CLAVE_SECRETA"; // En producción usa variables de entorno
 
 // =======================
 // Middlewares
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 // =======================
-// LOGIN
+// LOGIN (CORREGIDO)
 // =======================
 app.post("/auth/login", (req, res) => {
   const { email, password } = req.body;
@@ -36,22 +36,25 @@ app.post("/auth/login", (req, res) => {
 
       const user = results[0];
 
-      // ⚠️ SIN ENCRIPTACIÓN (temporal)
+      // Validación simple de contraseña
       if (password !== user.password) {
         return res.status(401).json({ msg: "Contraseña incorrecta" });
       }
 
       const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          role: user.role || "user" // admin / user
-        },
+        { id: user.id, email: user.email, role: user.role },
         SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "2h" }
       );
 
-      res.json({ token });
+      // FIX: Enviamos 'role' (no rol) y agregamos 'id' para el frontend
+      res.json({
+        msg: "Login exitoso",
+        token,
+        role: user.role,
+        id: user.id,
+        email: user.email
+      });
     }
   );
 });
@@ -73,230 +76,181 @@ const auth = (req, res, next) => {
   }
 };
 
-
+// =======================
+// Middleware ADMIN
+// =======================
 const isAdmin = (req, res, next) => {
-  db.query(
-    "SELECT role FROM users WHERE id = ?",
-    [req.user.id],
-    (err, results) => {
-
-      if (err) return res.status(500).json({ msg: "Error DB" });
-
-      if (results[0].role !== "admin") {
-        return res.status(403).json({ msg: "Solo admins" });
-      }
-
-      next();
-    }
-  );
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ msg: "Acceso denegado: Solo admins" });
+  }
+  next();
 };
 
 // =======================
-// Guardar datos del usuario
+// REGISTRO COMPLETO
 // =======================
-app.post("/datos", auth, (req, res) => {
+app.post("/datos/registro", (req, res) => {
+  // Extraemos todos los datos del body
   const {
-    nombre,
-    matricula,
-    carrera,
-    telefono,
-    institucion,
-    inicio,
-    termino,
-    horas
+    email, password, nombre, matricula, carrera, 
+    telefono, institucion, inicio, termino, horas
   } = req.body;
 
-  const sql = `
-    INSERT INTO datos_servicio
-    (user_id, nombre, matricula, carrera, telefono, institucion, inicio, termino, horas)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
+  // 1️⃣ Crear usuario en tabla 'users'
+  const sqlUser = "INSERT INTO users (email, password, role) VALUES (?, ?, 'alumno')";
 
-  db.query(
-    sql,
-    [
-      req.user.id,
-      nombre,
-      matricula,
-      carrera,
-      telefono,
-      institucion,
-      inicio,
-      termino,
-      horas
-    ],
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ msg: "Error al guardar datos" });
-      }
-      res.json({ msg: "Datos guardados correctamente" });
+  db.query(sqlUser, [email, password], (err, result) => {
+    if (err) {
+      // Error común: correo duplicado
+      return res.status(400).json({ msg: "El correo ya está registrado" });
     }
-  );
+
+    const userId = result.insertId; // ID del usuario recién creado
+
+    // 2️⃣ Guardar perfil en 'datos_servicio'
+    // FIX: Asegúrate que tu tabla 'datos_servicio' tenga la columna 'nombre'
+    // Si la moviste a 'users', quítala de aquí.
+    const sqlDatos = `
+      INSERT INTO datos_servicio
+      (user_id, nombre, matricula, carrera, telefono, institucion, inicio, termino, horas_totales)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+      sqlDatos,
+      [userId, nombre, matricula, carrera, telefono, institucion, inicio, termino, horas],
+      (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ msg: "Error al guardar datos del perfil" });
+        }
+        res.json({ msg: "Registro completo exitoso ✅" });
+      }
+    );
+  });
 });
 
 // =======================
-// DASHBOARD USUARIO
+// DASHBOARD USUARIO (CORREGIDO)
 // =======================
 app.get("/dashboard", auth, (req, res) => {
+  // FIX: Consultamos 'registros_horas', no 'datos_servicio'
+  // Queremos ver el historial de horas registradas por el alumno
   const sql = `
-    SELECT horas, inicio
-    FROM datos_servicio
-    WHERE user_id = ?
-    ORDER BY inicio ASC
-  `;
-
-  db.query(sql, [req.user.id], (err, results) => {
-    if (err) return res.status(500).json({ msg: "Error dashboard" });
-
-    const totalHoras = results.reduce(
-      (acc, r) => acc + Number(r.horas),
-      0
-    );
-
-    res.json({
-      totalHoras,
-      registros: results
-    });
-  });
-});
-
-// =======================
-// ADMIN - VER REGISTROS PENDIENTES
-// =======================
-app.get("/admin/registros", auth, (req, res) => {
-  if (req.user.role !== "admin")
-    return res.status(403).json({ msg: "Acceso denegado" });
-
-  db.query(
-    "SELECT * FROM registros_horas WHERE estado = 'pendiente'",
-    (err, results) => {
-      if (err) return res.status(500).json({ msg: "Error DB" });
-      res.json(results);
-    }
-  );
-});
-
-// =======================
-// ADMIN - APROBAR
-// =======================
-app.put("/admin/aprobar/:id", auth, (req, res) => {
-  if (req.user.role !== "admin")
-    return res.status(403).json({ msg: "Acceso denegado" });
-
-  db.query(
-    "UPDATE registros_horas SET estado = 'aprobado' WHERE id = ?",
-    [req.params.id],
-    (err) => {
-      if (err) return res.status(500).json({ msg: "Error DB" });
-      res.json({ msg: "Registro aprobado" });
-    }
-  );
-});
-
-// =======================
-// ADMIN - RECHAZAR
-// =======================
-app.put("/admin/rechazar/:id", auth, (req, res) => {
-  if (req.user.role !== "admin")
-    return res.status(403).json({ msg: "Acceso denegado" });
-
-  db.query(
-    "UPDATE registros_horas SET estado = 'rechazado' WHERE id = ?",
-    [req.params.id],
-    (err) => {
-      if (err) return res.status(500).json({ msg: "Error DB" });
-      res.json({ msg: "Registro rechazado" });
-    }
-  );
-});
-
-// =======================
-// ADMIN - VER ALUMNOS Y HORAS
-// =======================
-app.get("/admin/alumnos", auth, isAdmin, (req, res) => {
-
-  const sql = `
-    SELECT 
-      u.id,
-      u.email,
-      COALESCE(SUM(r.horas),0) AS totalHoras
-    FROM users u
-    LEFT JOIN registros_horas r 
-      ON u.id = r.user_id
-    WHERE u.role = 'alumno'
-    GROUP BY u.id
-  `;
-
-  db.query(sql, (err, results) => {
-
-    if (err) {
-      console.error("❌ Error admin alumnos:", err);
-      return res.status(500).json({ msg: "Error DB" });
-    }
-
-    res.json(results);
-  });
-
-});
-
-app.get("/admin/alumno/:id", auth, isAdmin, (req, res) => {
-
-  const sql = `
-    SELECT nombre, fecha, horas, estado
+    SELECT id, fecha, horas_registradas AS horas, estado
     FROM registros_horas
     WHERE user_id = ?
     ORDER BY fecha DESC
   `;
 
-  db.query(sql, [req.params.id], (err, results) => {
+  db.query(sql, [req.user.id], (err, results) => {
+    if (err) return res.status(500).json({ msg: "Error dashboard" });
 
-    if (err) return res.status(500).json({ msg: "Error DB" });
+    // Calculamos horas totales aprobadas
+    const totalHoras = results
+      .filter(r => r.estado === 'aprobado')
+      .reduce((acc, r) => acc + Number(r.horas), 0);
 
-    res.json(results);
+    const horasPendientes = results
+      .filter(r => r.estado === 'pendiente')
+      .reduce((acc, r) => acc + Number(r.horas), 0);
 
+    res.json({ 
+      totalHoras, 
+      horasPendientes,
+      registros: results 
+    });
   });
-
 });
-app.put("/admin/registro/:id", auth, isAdmin, (req, res) => {
 
-  const { estado } = req.body;
-
+// =======================
+// ADMIN - REGISTROS PENDIENTES
+// =======================
+app.get("/admin/registros", auth, isAdmin, (req, res) => {
+  // FIX: Hacemos un JOIN para ver el nombre del alumno, no solo su ID
   const sql = `
-    UPDATE registros_horas
-    SET estado = ?
-    WHERE id = ?
+    SELECT r.id, r.fecha, r.horas_registradas, r.estado, u.email 
+    FROM registros_horas r
+    JOIN users u ON r.user_id = u.id
+    WHERE r.estado = 'pendiente'
   `;
-
-  db.query(sql, [estado, req.params.id], (err) => {
-
+  
+  db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ msg: "Error DB" });
-
-    res.json({ msg: "Registro actualizado" });
-
+    res.json(results);
   });
-
 });
 
-app.post("/auth/register", (req, res) => {
-  const { email, password } = req.body;
+// =======================
+// ADMIN - APROBAR / RECHAZAR
+// =======================
+app.put("/admin/registro/:id", auth, isAdmin, (req, res) => {
+  const { estado } = req.body; // Espera 'aprobado' o 'rechazado'
 
   db.query(
-    "INSERT INTO users (email, password, role) VALUES (?, ?, 'alumno')",
-    [email, password],
+    "UPDATE registros_horas SET estado = ? WHERE id = ?",
+    [estado, req.params.id],
     (err) => {
-      if (err) {
-        return res.status(400).json({ msg: "Usuario ya existe" });
-      }
-
-      res.json({ msg: "Usuario creado" });
+      if (err) return res.status(500).json({ msg: "Error DB" });
+      res.json({ msg: `Registro ${estado} correctamente` });
     }
   );
 });
 
 // =======================
-// Levantar servidor
+// ADMIN - LISTA ALUMNOS + TOTALES
 // =======================
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`✅ Servidor en http://127.0.0.1:${PORT}`);
+app.get("/admin/alumnos", auth, isAdmin, (req, res) => {
+  // FIX: Agregamos GROUP BY para evitar errores de SQL
+  const sql = `
+    SELECT 
+      u.id,
+      u.email,
+      COALESCE(SUM(CASE WHEN r.estado = 'aprobado' THEN r.horas_registradas ELSE 0 END), 0) AS totalHoras
+    FROM users u
+    LEFT JOIN registros_horas r ON u.id = r.user_id
+    WHERE u.role = 'alumno'
+    GROUP BY u.id, u.email
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "Error DB" });
+    }
+    res.json(results);
+  });
+});
+
+// =======================
+// REGISTRAR HORAS (ALUMNO)
+// =======================
+app.post("/horas", auth, (req, res) => {
+  const { fecha, horas } = req.body;
+
+  if (!fecha || !horas) {
+    return res.status(400).json({ msg: "Faltan fecha u horas" });
+  }
+
+  // FIX: Usamos nombres de columnas consistentes con el SQL previo
+  const sql = `
+    INSERT INTO registros_horas (user_id, fecha, horas_registradas, estado)
+    VALUES (?, ?, ?, 'pendiente')
+  `;
+
+  db.query(sql, [req.user.id, fecha, horas], (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "Error al registrar horas" });
+    }
+
+    res.json({ msg: "Horas registradas. Esperando aprobación del admin." });
+  });
+});
+
+// =======================
+// SERVER
+// =======================
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });

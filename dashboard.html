@@ -4,127 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | EMS Control</title>
+
   <link rel="stylesheet" href="dashboard.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="logo">
-        <h2>CSS Control</h2>
-        <p>Control de Servicio Social</p>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>EMS Control</h2>
+      <p>Servicio Social</p>
+    </div>
+
+    <ul class="menu">
+      <li class="active">📊 Dashboard</li>
+      <li id="navRegistro">🕒 Historial</li> 
+      <li id="btnLogout" style="color: #ff6b6b; cursor: pointer;">🚪 Cerrar Sesión</li>
+    </ul>
+
+    <div class="user-box">
+      <span class="circle" id="userInitials">--</span>
+      <div>
+        <h4 id="userNameNav">Cargando...</h4>
+        <p>Alumno</p>
       </div>
-      <ul class="menu">
-        <li class="active">📊 Dashboard</li>
-        <li>🕒 Registro de Horas</li>
-        <li>⚙️ Configuración</li>
-      </ul>
-      <div class="user-box">
-        <span class="circle" id="userInitials">--</span>
-        <div>
-          <h4 id="userNameNav">Cargando...</h4>
-          <p>Servicio Social</p>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <header class="top-header">
+      <div class="header-info">
+        <h1>Hola, <span id="welcomeName">Estudiante</span> 👋</h1>
+        <p>Aquí tienes el resumen de tu progreso.</p>
+      </div>
+
+      <div class="status-badge">
+        <span class="dot"></span> En línea
+      </div>
+    </header>
+
+    <section class="card-section log-hours">
+      <div class="card-white">
+        <h3>📝 Registrar horas nuevas</h3>
+
+        <div class="log-grid">
+          <div class="input-group">
+            <label for="dateInput">Fecha de actividad</label>
+            <input type="date" id="dateInput" required>
+          </div>
+
+          <div class="input-group">
+            <label for="hoursInput">Cantidad de horas</label>
+            <input type="number" id="hoursInput" placeholder="Ej: 4" min="1" max="8" required>
+          </div>
+
+          <button class="btn-primary" id="saveDailyHours">
+            Guardar Registro
+          </button>
         </div>
       </div>
-    </aside>
+    </section>
 
-    <main class="content">
-      <header class="top-header">
-        <div class="header-info">
-          <h1>Hola, <span id="welcomeName">Usuario</span>! 👋</h1>
-          <p>¿Qué quieres revisar hoy?</p>
-        </div>
-        <div class="status-badge">
-          <span class="dot"></span> Monitoreo en tiempo real activo
-        </div>
-      </header>
+    <section class="stats-grid">
 
-      <section class="card-section log-hours">
-        <div class="card-white">
-            <h3>Registrar horas del día</h3>
-            <div class="log-grid">
-                <div class="input-group">
-                    <label>Fecha</label>
-                    <input type="date" id="dateInput">
-                </div>
-                <div class="input-group">
-                    <label>Horas realizadas</label>
-                    <input type="number" id="hoursInput" placeholder="Ej: 4">
-                </div>
-                <button class="btn-primary" id="saveDailyHours">Añadir Horas</button>
-            </div>
+      <div class="stat-card">
+        <div class="card-head">
+          <p>Horas Registradas</p>
+          <span class="badge gray">Histórico</span>
         </div>
-      </section>
+        <h2 id="cardTotal">0 hrs</h2>
+        <p class="subtext">Suma total enviada</p>
+      </div>
 
-      <section class="projection-bar card-white">
-        <div class="proj-input">
-          <label>Horas planeadas por semana:</label>
-          <div class="input-inline">
-            <input type="number" id="weeklyPlan" value="20">
-            <button class="btn-primary">Calcular Proyección</button>
-          </div>
+      <div class="stat-card">
+        <div class="card-head">
+          <p>En Revisión</p>
+          <span class="badge yellow">Pendiente</span>
         </div>
-        <div class="proj-stats">
-          <div class="stat-item">
-            <p>Semanas restantes:</p>
-            <strong>12.0 semanas</strong>
-          </div>
-          <div class="stat-item">
-            <p>Días estimados:</p>
-            <strong>60 días</strong>
-          </div>
-        </div>
-      </section>
+        <h2 id="cardPendientes">0 hrs</h2>
+        <p class="subtext">Falta aprobación</p>
+      </div>
 
-      <section class="stats-grid">
-        <div class="stat-card dark">
-          <div class="card-head">
-            <p>Acumuladas</p>
-            <span class="badge gray">Meta: 480h</span>
-          </div>
-          <h2>240 hrs</h2>
-          <p class="subtext">Horas totales</p>
+      <div class="stat-card">
+        <div class="card-head">
+          <p>Horas Aprobadas</p>
+          <span class="badge green">Oficiales</span>
         </div>
-        <div class="stat-card dark">
-          <div class="card-head">
-            <p>Pendientes</p>
-            <span class="badge yellow">Revisión</span>
-          </div>
-          <h2>20 hrs</h2>
-          <p class="subtext">En espera de aprobación</p>
-        </div>
-        <div class="stat-card dark">
-          <div class="card-head">
-            <p>Validadas</p>
-            <span class="badge green">Aprobado</span>
-          </div>
-          <h2>220 hrs</h2>
-          <p class="subtext">Horas oficiales</p>
-        </div>
-        <div class="stat-card dark">
-          <div class="card-head">
-            <p>Días Restantes</p>
-            <span class="badge red">Urgente</span>
-          </div>
-          <h2>45</h2>
-          <p class="subtext">Días estimados</p>
-        </div>
-      </section>
+        <h2 id="cardAprobadas">0 hrs</h2>
+        <p class="subtext">Validadas por admin</p>
+      </div>
 
-      <section class="charts-grid">
-        <div class="chart-container card-white">
-          <h3>Progreso Total (%)</h3>
-          <canvas id="progressChart"></canvas>
+      <div class="stat-card">
+        <div class="card-head">
+          <p>Por Completar</p>
+          <span class="badge red">Meta: 480h</span>
         </div>
-        <div class="chart-container card-white">
-          <h3>Historial Semanal</h3>
-          <canvas id="historyChart"></canvas>
-        </div>
-      </section>
-    </main>
-  </div>
+        <h2 id="cardRestantes">480 hrs</h2>
+        <p class="subtext">Para terminar SS</p>
+      </div>
 
-  <script src="dashboard.js"></script>
+    </section>
+
+    <section class="charts-grid">
+
+      <div class="chart-container card-white">
+        <h3>Progreso de la Meta</h3>
+        <div style="height: 250px; width: 100%;">
+            <canvas id="progressChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-container card-white">
+        <h3>Historial de Actividad</h3>
+        <div style="height: 250px; width: 100%;">
+            <canvas id="historyChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<script src="dashboard.js"></script>
 </body>
 </html>

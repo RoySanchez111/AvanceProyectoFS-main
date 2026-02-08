@@ -4,155 +4,116 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro Inicial | EMS Control</title>
-
   <link rel="stylesheet" href="datos.css" />
 </head>
 <body>
 
   <div class="layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="logo">
-        <h2>CSS Control</h2>
+        <h2>EMS Control</h2>
         <p>Control de Servicio Social</p>
       </div>
 
       <ul class="menu">
-        <li class="active">📌 Registro Inicial</li>
-        <li>📊 Dashboard</li>
-        <li>🕒 Registro de Horas</li>
-        <li>⚙️ Configuración</li>
+        <li>🔐 Inicio de Sesión</li>
+        <li class="active">📝 Registro de Datos</li>
+        <li style="opacity: 0.5;">📊 Panel de Control</li>
       </ul>
 
       <div class="user-box">
-        <span class="circle">RG</span>
+        <span class="circle">?</span>
         <div>
-          <h4>Nuevo usuario</h4>
-          <p>Servicio Social</p>
+          <h4>Nuevo Usuario</h4>
+          <p>Invitado</p>
         </div>
       </div>
     </aside>
 
-    <!-- CONTENIDO -->
     <main class="content">
 
-      <!-- HEADER -->
       <header class="top-header">
-        <h1>Registro Inicial</h1>
-        <p>Crea tu cuenta y completa tus datos para acceder al sistema</p>
+        <h1>Registro de Alumno</h1>
+        <p>Completa este formulario único para configurar tu perfil de Servicio Social.</p>
       </header>
 
-      <!-- FORMULARIO -->
       <form id="datosForm" class="card-form">
 
-        <!-- ===============================
-             CUENTA DE USUARIO
-        =============================== -->
-        <h2> Cuenta de usuario</h2>
-
+        <h3>👤 Cuenta de Acceso</h3>
         <div class="grid">
-
           <div class="input-group">
-            <label>Correo electrónico</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="ejemplo@email.com"
-              required
-            />
+            <label for="email">Correo Institucional</label>
+            <input type="email" id="email" placeholder="alumno@universidad.edu" required />
           </div>
 
           <div class="input-group">
-            <label>Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Mínimo 6 caracteres"
-              minlength="6"
-              required
-            />
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" placeholder="Mínimo 6 caracteres" minlength="6" required />
           </div>
-
         </div>
 
-        <!-- ===============================
-             DATOS PERSONALES
-        =============================== -->
-        <h2> Datos personales</h2>
-
+        <h3>🎓 Información Académica</h3>
         <div class="grid">
-
           <div class="input-group">
-            <label>Nombre completo</label>
-            <input type="text" id="nombre" required />
+            <label for="nombre">Nombre Completo</label>
+            <input type="text" id="nombre" placeholder="Tu nombre real" required />
           </div>
 
           <div class="input-group">
-            <label>Matrícula</label>
-            <input type="text" id="matricula" required />
+            <label for="matricula">Matrícula / ID</label>
+            <input type="text" id="matricula" placeholder="Ej: 2023-5501" required />
           </div>
 
           <div class="input-group">
-            <label>Carrera / Programa académico</label>
-            <input type="text" id="carrera" required />
+            <label for="carrera">Carrera</label>
+            <input type="text" id="carrera" placeholder="Ej: Ing. Sistemas" required />
           </div>
 
           <div class="input-group">
-            <label>Teléfono de contacto</label>
-            <input type="tel" id="telefono" required />
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" placeholder="10 dígitos" required />
           </div>
-
         </div>
 
-        <!-- ===============================
-             SERVICIO SOCIAL
-        =============================== -->
-        <h2> Datos del servicio social</h2>
-
-        <div class="input-group">
-          <label>Nombre de la institución o asociación</label>
-          <input type="text" id="institucion" required />
+        <h3>🏢 Datos del Servicio Social</h3>
+        
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <label for="institucion">Lugar donde realizas el servicio</label>
+          <input type="text" id="institucion" placeholder="Nombre de la empresa o fundación" required />
         </div>
 
-        <!-- ===============================
-             ADMINISTRATIVOS
-        =============================== -->
-        <h2> Datos administrativos</h2>
-
         <div class="grid">
-
           <div class="input-group">
-            <label>Fecha de inicio</label>
+            <label for="inicio">Fecha de Inicio</label>
             <input type="date" id="inicio" required />
           </div>
 
           <div class="input-group">
-            <label>Fecha estimada de término</label>
+            <label for="termino">Fecha de Término</label>
             <input type="date" id="termino" required />
           </div>
 
           <div class="input-group">
-            <label>Total de horas requeridas</label>
-            <input type="number" id="horas" min="1" required />
+            <label for="horas">Meta de Horas</label>
+            <input type="number" id="horas" value="480" min="1" required />
           </div>
-
         </div>
 
-        <!-- BOTÓN -->
-        <button type="submit" class="btn">
-          Crear cuenta y continuar →
-        </button>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">
+            Finalizar Registro
+          </button>
+        </div>
 
         <p class="extra">
-          ¿Ya tienes cuenta?
-          <a href="login.html">Inicia sesión</a>
+          ¿Ya tienes una cuenta?
+          <a href="login.html">Inicia sesión aquí</a>
         </p>
 
       </form>
 
     </main>
-
   </div>
 
   <script src="datos.js"></script>

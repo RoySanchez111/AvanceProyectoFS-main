@@ -1,108 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard | CSS Control</title>
-  <link rel="stylesheet" href="admin.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | EMS Control</title>
+  
+  <link rel="stylesheet" href="admin.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="logo">
-        <h2>CSS Admin Control</h2>
-        <p>Control de Servicio Social</p>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>EMS Control</h2>
+      <p>Panel Administrativo</p>
+    </div>
+
+    <ul class="menu">
+      <li class="active">📊 Resumen General</li>
+      <li onclick="alert('Función futura')">👥 Alumnos</li>
+      <li onclick="alert('Función futura')">⚙️ Configuración</li>
+      <li id="btnLogout" style="margin-top: auto; color: #ff6b6b;">🚪 Cerrar Sesión</li>
+    </ul>
+
+    <div class="user-box">
+      <span class="circle">AD</span>
+      <div>
+        <h4>Administrador</h4>
+        <p>Control Total</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <div class="top-header">
+      <h1>Panel de Control</h1>
+    </div>
+
+    <section class="stats-grid">
+      
+      <div class="stat-card dark">
+        <div class="card-header">
+          <span>Solicitudes</span>
+          <span class="badge yellow">Pendiente</span>
+        </div>
+        <h2 id="kpiPendientes">0</h2>
+        <p>Registros por revisar</p>
       </div>
 
-      <ul class="menu">
-        <li class="active">📊 Dashboard</li>
-        <li>✅ Validaciones</li>
-        <li>👥 Alumnos</li>
-        <li>⚙️ Configuración</li>
-      </ul>
+      <div class="stat-card dark">
+        <div class="card-header">
+          <span>Usuarios</span>
+          <span class="badge green">Activos</span>
+        </div>
+        <h2 id="kpiAlumnos">0</h2>
+        <p>Alumnos registrados</p>
+      </div>
 
-      <div class="user-box">
-        <span class="circle">LG</span>
-        <div>
-          <h4>Liam Gallagher</h4>
-          <p>System Administrator</p>
+<div class="stat-card dark">
+        <div class="card-header">
+          <span>Horas Aprobadas</span>
+          <span class="badge green">Global</span>
+        </div>
+        <h2 id="kpiHorasGlobales">0 h</h2> 
+        <p>Total acumulado alumnos</p>
+      </div>
+
+      <div class="stat-card dark">
+        <div class="card-header">
+          <span>Finalización</span>
+          <span class="badge purple">Meta 480h</span>
+        </div>
+        <h2 id="kpiTasa">0%</h2> 
+        <p>% Alumnos que terminaron</p>
+      </div>
+
+    </section>
+
+    <div class="main-grid">
+
+      <div class="card-white">
+        <h3>📝 Validaciones Pendientes</h3>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Alumno</th>
+              <th>Fecha</th>
+              <th>Horas</th>
+              <th>Evidencia</th> <th>Acciones</th> </tr>
+          </thead>
+          <tbody id="tablaPendientes">
+            <tr><td colspan="5">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-white">
+        <h3>📊 Distribución</h3>
+        <div class="canvas-container">
+          <canvas id="adminChart"></canvas>
+        </div>
+        <div style="margin-top: 20px;">
+          <p style="font-size: 13px; color: #666;">
+            Este gráfico muestra la proporción de horas aprobadas vs pendientes en todo el sistema.
+          </p>
         </div>
       </div>
-    </aside>
 
-    <main class="content">
-      <header class="top-header">
-        <h1>Dashboard de Administración</h1>
-      </header>
+    </div>
 
-      <section class="stats-grid">
-        <div class="stat-card dark">
-          <div class="card-header">
-            <span>Alumnos Activos</span>
-            <span class="badge green">normal</span>
-          </div>
-          <h2>1,250</h2>
-        </div>
-        <div class="stat-card dark">
-          <div class="card-header">
-            <span>Solicitudes Pendientes</span>
-            <span class="badge yellow">revisión</span>
-          </div>
-          <h2>45</h2>
-        </div>
-        <div class="stat-card dark">
-          <div class="card-header">
-            <span>Horas Validadas (Mes)</span>
-            <span class="badge green">aprobado</span>
-          </div>
-          <h2>3,800 hrs</h2>
-        </div>
-        <div class="stat-card dark">
-          <div class="card-header">
-            <span>Tasa de Finalización</span>
-            <span class="badge green">optimal</span>
-          </div>
-          <h2>72%</h2>
-        </div>
-      </section>
+  </main>
 
-      <div class="main-grid">
-        <section class="card-white table-container">
-          <h3>Validaciones Pendientes</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Estudiante</th>
-                <th>Fecha</th>
-                <th>Horas</th>
-                <th>Evidencia</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="validationsTable">
-              </tbody>
-          </table>
-        </section>
+</div>
 
-        <div class="charts-column">
-          <div class="card-white chart-box">
-            <h3>Horas Validadas por Semana</h3>
-            <div class="canvas-container">
-              <canvas id="doughnutChart"></canvas>
-            </div>
-          </div>
-          <div class="card-white chart-box">
-            <h3>Estado de Solicitudes</h3>
-            <div class="canvas-container">
-              <canvas id="lineChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script src="admin.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
