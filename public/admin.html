@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Control de Servicio Social</title>
+    <link rel="stylesheet" href="css/admin.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Control de Servicio Social</h2>
+          <p>Panel Administrativo</p>
+        </div>
+        <ul class="menu">
+          <li id="menu-resumen" class="active" onclick="cambiarVista('resumen')">📊 Resumen General</li>
+          <li id="menu-alumnos" onclick="cambiarVista('alumnos')">👥 Alumnos</li>
+          <li id="menu-config" onclick="cambiarVista('config')">⚙️ Configuración</li>
+          <li id="btnLogout" style="margin-top: auto; color: #ff6b6b; cursor: pointer;">Cerrar Sesión</li>
+        </ul>
+        <div class="user-box">
+          <span class="circle">AD</span>
+          <div><h4>Administrador</h4><p>Control Total</p></div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div id="vista-resumen" class="vista active">
+          <div class="top-header"><h1>Panel de Control</h1></div>
+
+          <section class="stats-grid">
+            <div class="stat-card dark"><div class="card-header"><span>Solicitudes</span><span class="badge yellow">Pendiente</span></div><h2 id="kpiPendientes">0</h2></div>
+            <div class="stat-card dark"><div class="card-header"><span>Usuarios</span><span class="badge green">Activos</span></div><h2 id="kpiAlumnos">0</h2></div>
+            <div class="stat-card dark"><div class="card-header"><span>Horas Aprobadas</span><span class="badge green">Global</span></div><h2 id="kpiHorasGlobales">0 h</h2></div>
+            <div class="stat-card dark"><div class="card-header"><span>Finalización</span><span class="badge purple">Meta 480h</span></div><h2 id="kpiTasa">0%</h2></div>
+          </section>
+
+          <div class="main-grid">
+            <div class="card-white">
+              <h3>Validaciones Pendientes</h3>
+              <table>
+                <thead><tr><th>Alumno</th><th>Fecha</th><th>Horas</th><th>Evidencia</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaPendientes"><tr><td colspan="5">Cargando...</td></tr></tbody>
+              </table>
+
+              <h3 style="color: #6d28d9; margin-top: 40px;">📑 Reportes de Medio Término (SS.02)</h3>
+              <table>
+                <thead><tr><th>Alumno</th><th>Fecha de Envío</th><th>Tipo de Trámite</th><th>Documento Oficial</th></tr></thead>
+                <tbody id="tablaReportesMedio"><tr><td colspan="4">Cargando...</td></tr></tbody>
+              </table>
+            </div>
+            <div class="card-white">
+              <h3>📊 Distribución</h3>
+              <div class="canvas-container"><canvas id="adminChart"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="vista-alumnos" class="vista">
+          <div class="top-header"><h1>Directorio de Alumnos</h1></div>
+          <div class="card-white">
+            <h3>Progreso por Estudiante</h3>
+            <table>
+              <thead><tr><th>Correo del Alumno</th><th>ID</th><th>Horas Aprobadas</th><th>Horas Restantes</th></tr></thead>
+              <tbody id="tablaAlumnosTotales"><tr><td colspan="4">Cargando...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="vista-config" class="vista">
+          <div class="top-header"><h1>Configuración del Sistema</h1></div>
+          <div class="card-white">
+            <h3>Lugares de Servicio Social Autorizados</h3>
+            <div class="input-inline">
+              <input type="text" id="nuevaInstInput" placeholder="Ej: Parque Industrial FINSA" />
+              <button class="btn-primary" onclick="agregarInstitucion()">+ Agregar Lugar</button>
+            </div>
+            <table>
+              <thead><tr><th>ID</th><th>Nombre de la Institución</th><th>Acciones</th></tr></thead>
+              <tbody id="tablaInstituciones"><tr><td colspan="3">Cargando...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="notificationModal">
+      <div class="modal-content">
+        <div class="modal-icon" id="notifIcon">ℹ️</div><h3 id="notifTitle">Información</h3><p id="notifMessage">Mensaje.</p>
+        <button class="btn-primary" id="notifBtn" onclick="closeModal('notificationModal')">Aceptar</button>
+      </div>
+    </div>
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal-content">
+        <div class="modal-icon" id="confirmIcon">⚠️</div><h3 id="confirmTitle">Confirmar</h3><p id="confirmMessage">¿Seguro?</p>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal('confirmModal')">Cancelar</button>
+          <button class="btn-primary" id="confirmYesBtn">Aceptar</button>
+        </div>
+      </div>
+    </div>
+    <script src="js/admin.js"></script>
+  </body>
+</html>
