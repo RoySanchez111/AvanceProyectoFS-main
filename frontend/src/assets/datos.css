@@ -1,0 +1,96 @@
+.registro-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  padding: 20px;
+}
+
+.registro-card {
+  display: flex;
+  width: 950px;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.registro-left {
+  flex: 1;
+  background-color: #112a20;
+  color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.registro-left h2 { color: #1dbf73; font-size: 28px; margin-bottom: 10px; }
+.registro-left p { color: #a7b8af; font-size: 14px; }
+.registro-left-footer h3 { font-size: 22px; margin-bottom: 10px; }
+
+.registro-right {
+  flex: 1.2;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.registro-right h2 { font-size: 26px; color: #163528; margin-bottom: 5px; }
+.registro-right p { font-size: 14px; color: #6b7280; margin-bottom: 25px; }
+
+.registro-form input, .registro-form select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+
+.registro-form input:focus, .registro-form select:focus {
+  outline: none;
+  border-color: #1dbf73;
+  box-shadow: 0 0 0 3px rgba(29, 191, 115, 0.1);
+}
+
+.form-grid {
+  display: flex;
+  gap: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #1dbf73;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.btn-submit:hover { background-color: #169e62; }
+
+.registro-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+}
+.registro-footer span { color: #1dbf73; cursor: pointer; font-weight: bold; }

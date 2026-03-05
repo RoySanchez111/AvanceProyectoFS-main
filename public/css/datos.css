@@ -1,0 +1,265 @@
+/* GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f5f7f9;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: #163528;
+  color: white;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo h2 {
+  font-size: 20px;
+}
+
+.logo p {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* =========================================
+   MENU (Estilo Botones Corregido)
+========================================= */
+.menu {
+  list-style: none;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 1. Estado Base (Botones apagados / oscuros) */
+.menu li.menu-btn {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05); /* Fondo oscuro semitransparente */
+  color: rgba(255, 255, 255, 0.7); /* Texto grisáceo */
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+/* Efecto al pasar el mouse por los apagados */
+.menu li.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.15); /* Se aclara un poco, pero sigue oscuro */
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* 2. Estado Activo (El ÚNICO iluminado de verde) */
+.menu li.menu-btn.active {
+  background: #1dbf73;
+  color: white;
+}
+
+.menu li.menu-btn.active:hover {
+  background: #159a5c;
+}
+
+/* 3. Estado Bloqueado (Panel de Control) */
+.menu li.menu-disabled {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3); /* Muy atenuado */
+  font-weight: 600;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========================================
+   MODAL DE AVISO (Pop-up)
+========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 35px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.modal-content h3 {
+  color: #163528;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.modal-content p {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* USER BOX */
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1dbf73;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* HEADER */
+.top-header h1 {
+  font-size: 28px;
+  color: #163528;
+}
+
+.top-header p {
+  margin-top: 5px;
+  color: gray;
+}
+
+/* CARD FORM */
+.card-form {
+  margin-top: 25px;
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* TITULOS */
+.card-form h2 {
+  margin: 25px 0 15px;
+  font-size: 18px;
+  color: #163528;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+/* INPUTS Y SELECTS */
+.input-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #163528;
+}
+
+.input-group input,
+.input-group select { /* <-- Agregamos el select aquí */
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.3s;
+  background-color: white; /* Importante para el select */
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.input-group input:focus,
+.input-group select:focus { /* <-- Agregamos el select aquí */
+  border-color: #1dbf73;
+  box-shadow: 0px 0px 6px rgba(29, 191, 115, 0.4);
+}
+
+/* BUTTON */
+.btn-primary { /* <--- ¡Aquí estaba el error, antes decía solo .btn! */
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #1dbf73;
+  color: white;
+  font-size: 16px;
+  font-weight: 600; /* Letra un poco más gruesa */
+  cursor: pointer;
+  transition: 0.3s; /* Animación suave */
+}
+
+.btn-primary:hover {
+  background: #159a5c;
+  transform: translateY(-2px); /* Pequeño salto al pasar el mouse */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 20px;
+  }
+}
